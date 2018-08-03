@@ -1,2 +1,2 @@
 # wikibox
-a modularization wiki base filesystem, no database, write by php
+a modularization wiki base filesystem, no database, writed by php
