@@ -1,5 +1,6 @@
 # wikibox
 a modularization wiki base filesystem, no database, writed by php
+基于wikitten
 
 # 统一入口
 index.php是统一的入口。
@@ -24,4 +25,7 @@ httpd.conf配置
 
 
 nginx
+
+
+
 
