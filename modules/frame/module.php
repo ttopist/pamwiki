@@ -1,8 +1,27 @@
 <?php
 
-echo 'this is frame module.php';
+debugPrint('this is frame module.php');
+
+$userModel = ModuleLoader::load('frame-user');
+$userModel->login();
+
+if(isset( $_REQUEST['a'])){
+    $action = $_REQUEST['a'];
+}else{
+    $action = 'layout';
+}
+
+debugPrint(" action is {$action}");
+
+switch($action){
+case 'layout':
 
 
+
+break;
+default:
+echo 'unknow action';
+}
 // check logined, set username guest or other
 
  
