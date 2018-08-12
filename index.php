@@ -1,5 +1,6 @@
 <?php
-// date
+
+/*
 foreach (getallheaders() as $name => $value) {  
     echo "$name: $value <br>\n";  
 }
@@ -9,6 +10,7 @@ foreach ($_SERVER as $name => $value) {
 }
 
 echo __FILE__ . '<br>';
+
 
 $request_uri = parse_url($_SERVER['REQUEST_URI']);
 $request_uri = explode("/", $request_uri['path']);
@@ -33,4 +35,14 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . '
 
 $ss = new ModulesManager();
 $ss->show();
+
+*/
+
+if (!defined('WIKIBOX_APP_NAME')) {
+    define('WIKIBOX_APP_NAME', 'wikibox_zyh');
+}
+
+require("modules/ModuleCaller.class.php");
+ModuleCaller::instance()->runModule('frame');
+
 ?>
