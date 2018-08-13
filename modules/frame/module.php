@@ -2,26 +2,38 @@
 
 debugPrint('this is frame module.php');
 
-$userModel = ModuleLoader::load('frame-user');
-$userModel->login();
-
-if(isset( $_REQUEST['a'])){
+// 获取action和path
+if (isset($_REQUEST['a'])) {
     $action = $_REQUEST['a'];
-}else{
+} else {
     $action = 'layout';
 }
+$param = $_REQUEST['p'];
+
+// 检验用户是否有权限做这几个操作
+$userModule = ModuleLoader::load('frame-user');
+$userModule->login();
 
 debugPrint(" action is {$action}");
 
-switch($action){
-case 'layout':
-
-
-
-break;
-default:
-echo 'unknow action';
+// 路由
+switch ($action) {
+    case 'layout':
+        $tree = '';
+        $renderModule = ModuleLoader::load('frame-render');
+        $content = $renderModule->render('xxx');
+        require 'layout.page.php';
+        break;
+    case 'render':
+        break;
+    case 'file':
+        break;
+    default:
+        echo 'unknow action.';
 }
+
+
+
 // check logined, set username guest or other
 
  
