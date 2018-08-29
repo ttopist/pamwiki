@@ -16,6 +16,11 @@ httpd.conf配置
     RewriteRule ^/wikibox/wikibox-library/(.*)$ /wikibox/index.php [L]
 </IfModule>
 
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^/wikibox/wikibox-library/(.*)$ /wikibox/index.php [L]
+</IfModule>
+
 .htaccess配置
 
 <IfModule mod_rewrite.c>
@@ -28,4 +33,14 @@ nginx
 
 
 
+/*
+在index支持两套路径方式， index.php/file  index.php?p=file
+
+内容页 md渲染直接使用写好的路径加载图片
+                       div
+index.php/file         直接显示
+index.php?p=file       basepath改掉，其他内容的css用全路径(/开头或者http开头)，或者../../形式,render内容直接显示
+
+
+*/
 

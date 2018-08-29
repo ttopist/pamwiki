@@ -1,56 +1,43 @@
 <?php
 
-/*
-foreach (getallheaders() as $name => $value) {  
-    echo "$name: $value <br>\n";  
-}
-
-foreach ($_SERVER as $name => $value) {  
-    echo "$name: $value <br>\n";  
-}
-
-echo __FILE__ . '<br>';
-
-
-$request_uri = parse_url($_SERVER['REQUEST_URI']);
-$request_uri = explode("/", $request_uri['path']);
-$script_name = explode("/", dirname($_SERVER['SCRIPT_NAME']));
-
-$app_dir = array();
-foreach ($request_uri as $key => $value) {
-    if (isset($script_name[$key]) && $script_name[$key] == $value) {
-        $app_dir[] = $script_name[$key];
-    }
-}
-
-
-var_dump($request_uri);echo '<br>';
-var_dump($script_name);echo '<br>';
-var_dump($app_dir);echo '<br>';
-
-
-//获取 baseUrl
-echo dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'ModulesManager.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . 'ModulesManager.php';
-
-$ss = new ModulesManager();
-$ss->show();
-
-*/
-
+// Define APP_NAME & LIBRARY_NAME
 if (!defined('WIKIBOX_APP_NAME')) {
-    define('WIKIBOX_APP_NAME', 'wikibox_zyh');
+    define('WIKIBOX_APP_NAME', 'my-wikibox-name');
+    define('WIKIBOX_LIBRARY_NAME', 'wikibox-library');
 }
 
-function debugPrint($str){
-    if(is_string($str)){
-        echo $str;
-    }else{
-        var_dump($str);
+// BASE_URI & URL_REWRITE
+$URL_REWRITE = false;
+$BASE_URI = dirname( explode('?',$_SERVER['REQUEST_URI'],2)[0] . '#') .'/';
+if( $t = strpos($BASE_URI, WIKIBOX_LIBRARY_NAME) ){
+    $URL_REWRITE = true;
+    $BASE_URI = substr($BASE_URI, 0, $t);
+}
+//define('URL_REWRITE', $URL_REWRITE);
+define('URL_REWRITE', false);
+define('BASE_URI', $BASE_URI);
+define('BASE_DIR', __DIR__ . DIRECTORY_SEPARATOR);
+define('DSEP', DIRECTORY_SEPARATOR);
+
+// WikiBox Util Class
+class WB
+{
+    static public function info($str){
+        if(is_string($str)){
+            echo $str .'<br>';
+        }else{
+            var_dump($str);
+        }
     }
+
+    static public function load($moduleName)
+    {
+        return require_once(BASE_DIR . 'modules' .DSEP. $moduleName .DSEP. 'module.php');
+    }
+
 }
 
-require("modules/ModuleLoader.class.php");
-ModuleLoader::load('frame');
+// load WikiBox
+WB::load('frame');
 
 ?>

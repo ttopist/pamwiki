@@ -2,7 +2,7 @@
 
 class User{
     public function login(){
-        debugPrint('user login');
+        //debugPrint('user login');
     }
 }
 

@@ -1,62 +1,40 @@
 <?php
 
-debugPrint('this is frame module.php');
-
-// 获取action和path
-if (isset($_REQUEST['a'])) {
-    $action = $_REQUEST['a'];
-} else {
-    $action = 'layout';
+if( URL_REWRITE ){
+    $action = 'view';
+}else{
+    $action = isset($_REQUEST['a'])?$_REQUEST['a']:'view';
 }
-$param = $_REQUEST['p'];
+WB::info(" action is {$action}");
 
-// 检验用户是否有权限做这几个操作
-$userModule = ModuleLoader::load('frame-user');
+// check user's right
+$userModule = WB::load('frame-user');
 $userModule->login();
 
-debugPrint(" action is {$action}");
+// action table: action -> function name
+$actionTable = array(
+    "view"=>"actionView",
+    "file"=>"actionFile"
+);
 
-// 路由
-switch ($action) {
-    case 'layout':
-        $tree = '';
-        $renderModule = ModuleLoader::load('frame-render');
-        $content = $renderModule->render('xxx');
-        require 'layout.page.php';
-        break;
-    case 'render':
-        break;
-    case 'file':
-        break;
-    default:
-        echo 'unknow action.';
+// action functions
+function actionView(){
+    require 'view.php';
 }
 
+function actionFile(){
+    require 'view.php';
+}
 
+function actionNone(){
+    die('404');
+}
 
-// check logined, set username guest or other
-
- 
-// is there a action, if no , default action is 'layout'
-// switch action
-
-// case layout
-// run page.php
-//    read tree with right
-//    show index.md? login.md?
-//
-
-// case render
-// get url, 
-// has read right? no -> render login
-// read file
-// create content
-// output content
-
-// call api
-// loadmodule
-// echo output
-
-
+// run action
+if(array_key_exists($action, $actionTable)){
+    $actionTable[$action]();
+}else{
+    actionNone();
+}
 
 ?>
