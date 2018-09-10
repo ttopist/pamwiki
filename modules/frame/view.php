@@ -27,7 +27,6 @@ function renderContent()
 
     // render table
     $extensionRenderTable = array(
-        //"md" => "frame-render",
         "md" => "markdown",
     );
     if (array_key_exists($extension, $extensionRenderTable)) {
@@ -134,7 +133,7 @@ function tree($array, $parent, $parts = array(), $step = 0)
 </div>
 <ul class="unstyled" id="tree-filter-results"></ul>
 
-<?php echo tree(_getTree(), WIKIBOX_LIBRARY_NAME, isset($parts) ? $parts : array()); ?>
+<?php echo tree(_getTree(), WIKIBOX_LIBRARY_NAME, explode("/", substr(getRequestPath(),1)) ); ?>
 
                             </div>
                         </div>

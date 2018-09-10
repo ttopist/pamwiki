@@ -23,6 +23,7 @@ define('DSEP', DIRECTORY_SEPARATOR);
 class WB
 {
     static public function info($str){
+        return;
         if(is_string($str)){
             echo $str .'<br>';
         }else{

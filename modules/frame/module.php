@@ -14,7 +14,8 @@ $userModule->login();
 // action table: action -> function name
 $actionTable = array(
     "view"=>"actionView",
-    "file"=>"actionFile"
+    "file"=>"actionFile",
+    "api"=>"actionApi",
 );
 
 // action functions
@@ -24,6 +25,14 @@ function actionView(){
 
 function actionFile(){
     require 'view.php';
+}
+
+function actionApi(){
+    $moduleName = isset($_REQUEST['m'])?$_REQUEST['m']:'';
+    if(strlen($moduleName)>0){
+        $apiModule = WB::load($moduleName);
+        $apiModule->api();
+    }
 }
 
 function actionNone(){
